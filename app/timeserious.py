@@ -27,7 +27,7 @@ def addData():
         	if _units == 'Tonnes of CO2 equivalent gas':
         		#blah
 	        	results = analyse.analyseData(_url,_source,_units,_entity)
-	        	return render_template('emissions.html', results=results)
+	        	return render_template('emissions.html', results=results,units=_units,source=_source,entity=_entity)
 
     except Exception as e:
         return render_template('error.html',error = str(e))
