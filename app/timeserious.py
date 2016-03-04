@@ -23,7 +23,6 @@ def addData():
         # results = json.dumps({'url':_url,'source':_source,'units':_units,'entity':_entity})
 
         if _url and _source and _units:
-
             if _units == 'tonnes of CO2 equivalent gas':
                 #blah
                 results = analyse.analyseData(_url,_source,_units,_entity)

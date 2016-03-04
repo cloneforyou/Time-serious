@@ -19,6 +19,8 @@ def analyseData(url,source,units,entity):
 
 	df = pd.read_csv(url)
 
+	results["all"] = df.sort_values(by='value',ascending=False).to_json(orient='records')
+
 	# print df
 	#Year trend
 	gpYear = df.groupby('datetime')
@@ -27,7 +29,6 @@ def analyseData(url,source,units,entity):
 	# print yearSum.to_json()
 	results["summary"]["yearSum"] = yearSum.to_json()
 	results["summary"]["yearMean"] = yearMean.to_json()
-	results["all"] = df.sort_values(by='value',ascending=False).to_json(orient='records')
 
 	yearPctChange = yearSum.pct_change()
 
@@ -38,6 +39,8 @@ def analyseData(url,source,units,entity):
 	mostRecentYearTotal = yearSum.sort_index(ascending=False)["value"].iloc[0]
 	results["summary"]["mostRecentYearTotal"] = mostRecentYearTotal
 	results["summary"]["mostRecentYearTotalStr"] = niceNumber(mostRecentYearTotal)
+
+	# print yearSum.sort(ascending=False)["value"].iloc[0]
 
 	mostRecentYear = yearSum.sort_index(ascending=False).index[0]
 	results["summary"]["mostRecentYear"] = mostRecentYear
@@ -70,7 +73,8 @@ def analyseData(url,source,units,entity):
 			nullSentence = "There were " + str(onlynull.index) + " " + entity + " that did not report in " + mostRecentYear 
 		results['summary']['nullSentence'] = nullSentence
 
-	# print results
+
+	print results
 
 	# newJson = json.dumps(jsonStr, indent=4)
 	with open('allresults.json','w') as fileOut:
@@ -81,5 +85,7 @@ def analyseData(url,source,units,entity):
 			fileOut.write(yearSum.to_json())
 	with open('summary.json','w') as fileOut:
 			fileOut.write(json.dumps(results["summary"]))							
-			
+
 	return results
+
+# analyseData('https://docs.google.com/spreadsheets/d/1l49PR88epvzcXGDReLJ-xa2DbtQmRLQN6g-SoqGgSaM/pub?output=csv','Clean Energy Regulator','tonnes of CO2 equivlaent','corporation')	

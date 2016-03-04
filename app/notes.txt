@@ -1,0 +1,18 @@
+Options +ExecCGI
+AddHandler fcgid-script .fcgi
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !=/YOUR/PATH/TO/public_html/flask_hello_world/flask_hello_world.fcgi
+RewriteRule ^(.*)$ flask_hello_world.fcgi/$1 [QSA,L]
+
+
+
+#!/home4/nickever/venv/timeserious/bin/python
+
+from flup.server.fcgi import WSGIServer
+from timeserious import app as application
+
+WSGIServer(application).run()
+
+
+
+chmod +x $HOME/public_html/timeserious/timeserious.fcgi
