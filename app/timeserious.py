@@ -3,6 +3,7 @@ from flask import Flask, render_template, json, request,redirect,session,jsonify
 import simplejson as simpljson
 import pandas
 import csv
+import analyse
 
 app = Flask(__name__)
 
@@ -11,10 +12,25 @@ app = Flask(__name__)
 def hello_world():
     return render_template('index.html')
 
-@app.route('/the-time')
-def the_time():
-     cur_time = str(datetime.now())
-     return cur_time + ' is the current time!  ...YEAH!'
+@app.route('/addData',methods=['POST'])
+def addData():
+    try:
+        _url = request.form['urlInput']
+        _source = request.form['dataSource']
+        _units = request.form['selectUnits']
+        _entity = request.form['entityName']
+
+        # results = json.dumps({'url':_url,'source':_source,'units':_units,'entity':_entity})
+
+        if _url and _source and _units:
+
+        	if _units == 'Tonnes of CO2 equivalent gas':
+        		#blah
+	        	results = analyse.analyseData(_url,_source,_units,_entity)
+	        	return render_template('emissions.html', results=results)
+
+    except Exception as e:
+        return render_template('error.html',error = str(e))
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Time serious</title>
+ 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+ 
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+ 
+    <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+    <style>
+        .btn-file {
+            position: relative;
+            overflow: hidden;
+        }
+         
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+    </style>
+ 
+</head>
+ 
+<body>
+ 
+    <div class="container">
+        <div class="header">
+            <h3 class="text-muted">Time Serious</h3>
+        </div>
+ 
+        <div class="row">
+            <h2>Results</h2>
+        </div>
+        <div id="output">
+            <p>{{results}} has reported the highest {{current units}} to {{source}}, making it the highest level in {{daterange}}.</p>
+
+			<p>The latest report released by {{source}} has outlined a year on year increase of {{units year on year}} from {{top entity 2015}}.</p>
+
+			<p>{{top entity 2015}} hit the top of the list with a standout {{current units}}. The top ten {{entitytype}} also included {{2nd entity 2015}}, {3rd entity 2015}}, {{4th entity 2015}} and {{5th entity 2015}}.</p>
+
+			<p>{{generate graph/table of top ten results}}.</p>
+
+			<p>The average {{current units}} in the {{date range}} year across the board was {{average units}}.</p>
+
+			<p>The total amount of {{current units}} in the reporting period was {{sum of current units}}.</p>
+        </div>    
+ 
+    </div>
+</body>
+ 
+</html>
