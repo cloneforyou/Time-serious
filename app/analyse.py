@@ -1,5 +1,6 @@
 from datetime import datetime
 import pandas as pd
+import simplejson as json
 
 #Analyse all the things
 
@@ -59,8 +60,19 @@ def analyseData(url,source,units,entity):
 		results['summary']['nullSentence'] = nullSentence
 
 	print results
+
+	# newJson = json.dumps(jsonStr, indent=4)
+	with open('allresults.json','w') as fileOut:
+			fileOut.write(df.sort_values(by='value',ascending=False).to_json(orient='records'))
+	with open('yearMean.json','w') as fileOut:
+			fileOut.write(yearMean.to_json())
+	with open('yearSum.json','w') as fileOut:
+			fileOut.write(yearSum.to_json())
+	with open('summary.json','w') as fileOut:
+			fileOut.write(json.dumps(results["summary"]))							
+
 	return results
 
-# analyseData('https://docs.google.com/spreadsheets/d/1l49PR88epvzcXGDReLJ-xa2DbtQmRLQN6g-SoqGgSaM/pub?output=csv','Clean Energy Regulator','tonnes of CO2 equivlaent','corporation')	
+analyseData('https://docs.google.com/spreadsheets/d/1l49PR88epvzcXGDReLJ-xa2DbtQmRLQN6g-SoqGgSaM/pub?output=csv','Clean Energy Regulator','tonnes of CO2 equivlaent','corporation')	
 
 

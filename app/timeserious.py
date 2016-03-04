@@ -1,6 +1,6 @@
 from datetime import datetime
-from flask import Flask, render_template, json, request,redirect,session,jsonify
-import simplejson as simpljson
+from flask import Flask, render_template,request,redirect,session,jsonify
+import simplejson as json
 import pandas
 import csv
 import analyse
