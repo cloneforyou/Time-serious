@@ -18,9 +18,8 @@ def analyseData(url,source,units,entity):
 	results["summary"] = {}
 
 	df = pd.read_csv(url)
-
-	results["all"] = df.sort_values(by='value',ascending=False).to_json(orient='records')
-
+	allresults = df.sort_values(by='value',ascending=False).to_json(orient='records')
+	print allresults
 	# print df
 	#Year trend
 	gpYear = df.groupby('datetime')
@@ -77,15 +76,15 @@ def analyseData(url,source,units,entity):
 	print results
 
 	# newJson = json.dumps(jsonStr, indent=4)
-	with open('allresults.json','w') as fileOut:
-			fileOut.write(df.sort_values(by='value',ascending=False).to_json(orient='records'))
-	with open('yearMean.json','w') as fileOut:
-			fileOut.write(yearMean.to_json())
-	with open('yearSum.json','w') as fileOut:
-			fileOut.write(yearSum.to_json())
-	with open('summary.json','w') as fileOut:
-			fileOut.write(json.dumps(results["summary"]))							
+	# with open('allresults.json','w') as fileOut:
+	# 		fileOut.write(df.sort_values(by='value',ascending=False).to_json(orient='records'))
+	# with open('yearMean.json','w') as fileOut:
+	# 		fileOut.write(yearMean.to_json())
+	# with open('yearSum.json','w') as fileOut:
+	# 		fileOut.write(yearSum.to_json())
+	# with open('summary.json','w') as fileOut:
+	# 		fileOut.write(json.dumps(results["summary"]))							
 
-	return results
+	return (results, allresults)
 
 # analyseData('https://docs.google.com/spreadsheets/d/1l49PR88epvzcXGDReLJ-xa2DbtQmRLQN6g-SoqGgSaM/pub?output=csv','Clean Energy Regulator','tonnes of CO2 equivlaent','corporation')	
