@@ -19,7 +19,7 @@ def analyseData(url,source,units,entity):
 
 	df = pd.read_csv(url)
 
-	results["all"] = df.sort_values(by='value',ascending=False).to_json(orient='records')
+	results["allresults"] = df.sort_values(by='value',ascending=False).to_json(orient='records')
 
 	# print df
 	#Year trend
@@ -74,10 +74,10 @@ def analyseData(url,source,units,entity):
 		results['summary']['nullSentence'] = nullSentence
 
 
-	print results
+	# print results
 
 	# newJson = json.dumps(jsonStr, indent=4)
-	with open('allresults.json','w') as fileOut:
+	with open('js/data.js','w') as fileOut:
 			fileOut.write(df.sort_values(by='value',ascending=False).to_json(orient='records'))
 	with open('yearMean.json','w') as fileOut:
 			fileOut.write(yearMean.to_json())
@@ -86,6 +86,6 @@ def analyseData(url,source,units,entity):
 	with open('summary.json','w') as fileOut:
 			fileOut.write(json.dumps(results["summary"]))							
 
-	return results
+	# return results
 
 # analyseData('https://docs.google.com/spreadsheets/d/1l49PR88epvzcXGDReLJ-xa2DbtQmRLQN6g-SoqGgSaM/pub?output=csv','Clean Energy Regulator','tonnes of CO2 equivlaent','corporation')	

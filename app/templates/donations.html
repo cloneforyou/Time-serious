@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name=viewport content="width=device-width,initial-scale=1">
+		<link href="bubble.png" rel="icon">
+		<meta charset="utf-8">
+		<!--<link href="//pasteup.guim.co.uk/0.0.5/css/fonts.pasteup.min.css" rel="stylesheet">-->
+		<title>unicorns</title>
+<link href="http://gdn-cdn.s3.amazonaws.com/embed/labs/a-healthier-brighter-future/test/css/timeserious.css" rel="stylesheet">
+
+	</head>
+	<body>
+	
+		<div id="overview">
+		
+			<h2>This set has <b id="src-count">---</b> items.<br> total is <b id="src-sum">---</b> units.</h2>
+			
+			<ol id="chunks">
+				<li id="blank-data">
+					<h4><b>2</b>  items had blank data (X%):</h4>
+					<ol>
+						<li>AERIS RESOURCES LIMITED</li>
+						<li>AERIS RESOURCES LIMITED</li>
+					</ol>
+				</li>
+				<li id="footnotes">
+					<h4><b>2</b> items have footnotes (X%). Check data:</h4>
+					<ol>
+						<li>AERIS RESOURCES LIMITED</li>
+						<li>AERIS RESOURCES LIMITED</li>
+					</ol>
+				</li>
+				<li id="duplicates">
+					<h4><b>1</b> duplicates found (XX%):</h4>
+					<ol>
+						<li>AERIS RESOURCES LIMITED</li>
+					</ol>
+				</li>
+			</ol>
+
+			
+			
+			<div id="bar">
+			
+				<ol id="dots"></ol>
+				
+				<div id="min">
+					<h6>Min.</h6>
+					<b id="src-min">-</b>
+					<h4><span id="min1">-</span> avg.<br>
+						<span id="min2">-</span> max.</h4>
+				</div>
+				
+				<div id="max">
+					<h6>Max.</h6>
+					<b id="src-max">-</b>
+					<h4><span id="max1">-</span> avg.<br>
+						<span id="max2">-</span> min.</h4>
+				</div>
+				
+				<div id="avg">
+					<h6>Avg.</h6>
+					<b id="src-avg">-</b>
+					<h4><span id="avg1">-</span> avg.<br>
+						<span id="avg2">-</span> min.</h4>
+				</div>
+
+			</div>
+			
+			<blockquote>
+				 <p>{{results.summary.biggestEntity}} has reported the highest {{units}} to {{source}}, making it the highest level in {{results.summary.mostRecentYear}}.</p>
+            <p>Overall, there was a {{results.summary.currYearPctChange}}% increase in total {{units}} year-on-year, bringing the total to {{results.summary.mostRecentYearTotalStr}}.</p>
+            <p>{{results.summary.biggestEntity}} hit the top of the list, followed by {{results.summary.topTen[1]}}, {{results.summary.topTen[2]}}, {{results.summary.topTen[3]}} and {{results.summary.topTen[4]}}.</p>
+			</blockquote>
+
+			<div id="line-chart">
+				<div class="lines">
+					<div class="l100"><span>4,500kt</span></div>
+					<div class="l66"><span>4,250kt</span></div>
+					<div class="l33"><span>4,000kt</span></div>
+				</div>
+				<svg width="700" height="200">
+					<polyline points="50,16  150,34.6  250,16 350,37.2 450,133 550,150 650,109" />
+					<circle cx="50" cy="16" r="8" data-n="444067735" data-year="2009" />
+					<circle cx="150" cy="34.6" r="8" data-n="437056806" data-year="2010" />
+					<circle cx="250" cy="16" r="8" data-n="444067735" data-year="2011" />
+					<circle cx="350" cy="37.2" r="8" data-n="436068363" data-year="2012" />
+					<circle cx="450" cy="133" r="8" data-n="400713596" data-year="2013" />
+					<circle cx="550" cy="150" r="8" data-n="394292365" data-year="2014" />
+					<circle cx="650" cy="109" r="8" data-n="409941226" data-year="2015" />
+				</svg>
+				<ol id="years">
+					<li>2009</li>
+					<li>2010</li>
+					<li>2011</li>
+					<li>2012</li>
+					<li>2013</li>
+					<li>2014</li>
+					<li>2015</li>
+				</ol>
+			</div>
+			
+			<div id="chart">
+			
+				<h2>The Chart</h2>
+				
+				<p>
+					<select id="filter">
+						<option data-filter="all">Select an option</option>
+						<option data-filter="start" data-filterNum="10">Show top 10</option>
+						<option data-filter="start" data-filterNum="20">Show top 20</option>
+						<option data-filter="start" data-filterNum="30">Show top 30</option>
+						<!--
+						<option data-filter="end" data-filterNum="10">Show bottom 10</option>
+						<option data-filter="end" data-filterNum="20">Show bottom 20</option>
+						<option data-filter="end" data-filterNum="30">Show bottom 30</option>
+						-->
+						<option data-filter="all">Show all</option>
+					</select>
+				</p>
+				
+				<ol id="bars"></ol>
+				
+				<p class="btns">
+					<a>download</a>
+				</p>
+				
+			</div>
+				
+		
+		</div>
+	
+		<div id="info"></div>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="http://gdn-cdn.s3.amazonaws.com/embed/labs/a-healthier-brighter-future/test/data.js"></script>
+	<script>
+
+/*
+var srcMax = 100;
+var srcMin = 7;
+var srcAvg = 22;
+var srcSum = 1204;
+var srcData = [
+7,100,66,88,12,34,42,99,78
+];
+*/
+
+var srcData = srcData.allresults;
+var cleanData = [];
+
+$(document).ready(function(){
+
+	//!!!!
+	/*
+	var obj = {
+	  "flammable": "inflammable",
+	  "duh": "no duh"
+	};
+	
+	$.each( obj, function( key, value ) {
+	  alert( key + ": " + value );
+	});
+	*/
+	
+	
+	var count = 0;
+	var srcMax = 0;
+	var srcMin = 0;
+	var srcSum = 0;
+	var srcAvg = 0;
+	
+	function compareToMin(n){
+	
+		var tempMin = (srcMin==0)? 1:srcMin;
+
+		//return 
+	
+	}
+	
+	function compareToMax(n){
+	
+		//return 
+	
+	}
+	
+	function compareToAvg(n){
+	
+		//return 
+	
+	}
+	
+	$.each( srcData, function(i,value){
+	
+	  	//console.log(key);
+	  	//console.log(value['total'])
+	  	
+	  	var obj = value;
+	  	var year = obj['datetime']*1;
+	  	
+	  	if (year==2015){
+	  	
+	  		var n = value['value']*1;
+	  	
+			//console.log(i);
+			//console.log(value['name'])
+			//console.log(value['value'])
+		
+			if (!isNaN(n)){
+	  
+				srcMax = Math.max(n, srcMax);
+				srcMin = Math.min(n, srcMin);
+				srcSum += n;
+		
+			}
+			
+			cleanData.push(obj);
+			count++;
+	  	
+	  	}
+	  	
+	});
+	
+	//console.log(obj["Macquarie Generation"])
+	console.log(cleanData[0]);
+	console.log('----');
+	console.log(count);
+	console.log(srcMax)
+	console.log(srcMin)
+	console.log(srcSum)
+	console.log(Math.round(srcSum/count))
+	/* */
+	
+	srcAvg = Math.round(srcSum/count);
+	
+	//srcMin = (srcMin==0)? 1 : srcMin;
+
+	var $body = $('body');
+	var $info = $('#info');
+	var $dots = $('#dots');
+	var $bars = $('#bars');
+	var $max = $('#max');
+	var $min = $('#min');
+	var $avg = $('#avg');
+	var srcLength = count+1;
+	var dotsStr = '';
+	var barsStr = '';
+	
+	$('#src-count').html(count);
+	$('#src-sum').html(srcSum.toLocaleString());
+	$('#src-min').html(srcMin.toLocaleString());
+	$('#src-max').html(srcMax.toLocaleString());
+	$('#src-avg').html(srcAvg.toLocaleString());
+	
+	$('#min1').html( ((srcMin/srcAvg)*100)+'%')
+	$('#min2').html( ((srcMin/srcMax)*100)+'%')
+	
+	$('#max1').html((Math.round((srcMax/srcAvg)*10)/10)+'x')
+	$('#max2').html((Math.round((srcMax/srcMin)*10)/10)+'x')
+	
+	$('#avg1').html((Math.round((srcAvg/srcMin)*10)/10)+'x')
+	$('#avg2').html((Math.round((srcAvg/srcMax)*100))+'%')
+	
+
+	
+	//for (var i=0;i<srcLength;i++){
+	var objCount = 0;
+	$.each( cleanData, function(i,value){
+		
+		var row = cleanData[i];
+		var name = row['name'];
+		var n = row['value']*1;
+		var xPos = (n-srcMin)/(srcMax-srcMin)*100;
+		var w = n/srcMax*100;
+		var classStr = '';
+		//var dotsClassStr = (n==null) ? 'sm' : '';
+		var barClassStr = (w<10) ? 'sm' : '';
+	
+		dotsStr += '<li class="'+classStr+'" data-name="'+name+'" data-index="'+i+'" style="left:'+xPos+'%"></li>';
+		barsStr += '<li class="'+classStr+' '+barClassStr+'">';
+		barsStr += '<h4>'+name+'</h4>';
+		barsStr += '<div class="bar" style="width:'+w+'%" data-name="'+name+'" data-index="'+objCount+'" ><!--<span>'+name+'</span>--><b>'+n.toLocaleString()+'</b></div>';
+		barsStr += '</li>';
+		
+		objCount++
+	
+	});
+	
+	//PSOITION AVG
+	var xPos = (srcAvg-srcMin)/(srcMax-srcMin);
+	$avg.css({'left':(xPos*100)+'%','opacity':1});
+	
+	$dots.html(dotsStr);
+	$bars.html(barsStr);
+	
+	
+	$('circle').mousemove(function(e){
+
+			var $node = $(this);
+			var n = $node.attr('data-n')*1;	
+			var year = $node.attr('data-year');
+			var xPos = e.pageX;
+			var yPos = e.pageY;
+			var str = '';
+			var classStr = '';
+		
+			str = '<h3>'+n.toLocaleString()+'</h3>';
+			str += '<h4>'+year+'</h4>';
+		
+			$info.attr('class','time').html(str).css({
+
+				'left':xPos+'px',
+				'top':(yPos-40)+'px'
+
+			}).show();
+
+	}).mouseleave(function(){
+		$info.hide();
+	});
+	
+	
+	$('[data-index]').mousemove(function(e){
+
+			var $node = $(this);
+			var i = $node.attr('data-index')*1;	
+			var name = $node.attr('data-name');	
+			var n = cleanData[i]['value'];
+			var xPos = e.pageX;
+			var yPos = e.pageY;
+			var w = $body.width();
+			var str = '';
+			var classStr = '';
+		
+			str = '<h3>'+name+'</h3>';
+			str += '<p>#'+(i+1)+' out of '+srcLength+'</p>';
+			str += '<b class="number">'+n.toLocaleString()+'</b>';
+		
+			var minStr = '';
+			var maxStr = '';
+			var avgStr = '';
+			
+			var tempMin = (srcMin==0)? 1 : srcMin;
+		
+			if (n==srcMin){
+				minStr = 'this is';
+			}
+			
+			else {
+				minStr = (Math.round((n/tempMin)*10)/10).toLocaleString()+'x';
+			}
+		
+			str += '<h4>'+minStr+'</b> the min.</h4>';
+		
+			// MAX
+			if (n==srcMax){
+				maxStr = '<b>this is</b>'
+			}
+			else {
+				maxStr = '<b>'+((n/srcMax)*100).toLocaleString()+'%</b> of';
+			}
+		
+			str += '<h4>'+maxStr+' the max.</h4>';
+		
+			var avgStr = '';
+		
+			if (n==srcAvg) {
+				avgStr = '<b>this is</b>'
+			}
+			else if (n<srcAvg){
+				avgStr = '<b>'+((n/srcAvg)*100).toLocaleString()+'%</b> of';
+			}
+			else {
+				avgStr = '<b>'+Math.round((n/srcAvg)*10)/10+'x</b>';
+			}
+		
+			str += '<h4>'+avgStr+' the Avg.</h4>';
+		
+			$info.attr('class',classStr).html(str).css({
+
+				'left':xPos+'px',
+				'top':(yPos-40)+'px'
+
+			}).show();
+
+	}).mouseleave(function(){
+		$info.hide();
+	});
+
+	var $barItem = $('#bars li');
+
+	$('#filter').change(function(){
+		
+		var $node = $(this).find(":selected");
+		var filterVal = $node.attr('data-filter');
+		var filterNum = $node.attr('data-filterNum')*1;
+		
+		//console.log(filterNum)
+		
+		if (filterVal=='all'){
+			$barItem.show();
+		}
+		
+		else {
+		
+			for (var i=0; i<count; i++){
+		
+				var $thisBar = $barItem.eq(i);
+			
+				if (i<filterNum){
+					$thisBar.show();
+				}
+			
+				else {
+					$thisBar.hide();
+				}
+		
+			}
+		
+		}
+		
+		
+		
+
+	});
+	
+	
+
+});
+
+</script>
+
+	</body>
+</html>

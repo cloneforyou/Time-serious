@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name=viewport content="width=device-width,initial-scale=1">
+		<link href="bubble.png" rel="icon">
+		<meta charset="utf-8">
+		<!--<link href="//pasteup.guim.co.uk/0.0.5/css/fonts.pasteup.min.css" rel="stylesheet">-->
+		<title>unicorns</title>
+<style>
+/*
+- % footnotes, blank etc
+- show total, rows, cols
+- scale & download buttons
+- lorem ipsum
+- show double/halved etc
+- option to remove.
+- options fo r10 top, bottom 10
+- check colour blind
+*/
+
+@font-face {
+font-family:'egyptian-light';
+src: url('fonts/gdnegyde2lig-webfont.eot');
+src: url('fonts/gdnegyde2lig-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/gdnegyde2lig-webfont.woff2') format('woff2'),
+         url('fonts/gdnegyde2lig-webfont.woff') format('woff'),
+         url('fonts/gdnegyde2lig-webfont.ttf') format('truetype'),
+         url('fonts/gdnegyde2lig-webfont.svg#de2_display_egyptian_lightRg') format('svg');
+font-weight: normal;
+font-style: normal}
+
+@font-face {
+font-family:'egyptian-semibold';
+src: url('fonts/gdnegyde5sem-webfont.eot');
+src: url('fonts/gdnegyde5sem-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/gdnegyde5sem-webfont.woff2') format('woff2'),
+         url('fonts/gdnegyde5sem-webfont.woff') format('woff'),
+         url('fonts/gdnegyde5sem-webfont.ttf') format('truetype'),
+         url('fonts/gdnegyde5sem-webfont.svg#de5_display_egyptian_semiboRg') format('svg');
+font-weight: normal;
+font-style: normal}
+
+* {
+-moz-box-sizing:border-box;
+-webkit-box-sizing:border-box;
+box-sizing:border-box}
+
+body {
+margin:0;
+padding:0;
+background:#fff;
+color:#333;
+line-height:1.25;
+font-family:"egyptian-light";
+font-weight:200;
+text-align:center;
+-webkit-font-smoothing:antialiased}
+
+#overview {
+width:65%;
+margin:4rem auto}
+
+ol,li {
+padding:0;
+margin:0;
+list-style-type:none}
+
+b {
+font-family:"egyptian-semibold"}
+
+h2 {
+line-height:1;
+margin-top:40px;
+font-size:40px;
+font-weight:200}
+
+h2 b {
+}
+
+h4 {
+font-size:14px;
+font-family:'egyptian-semibold'}
+
+#chunks {
+margin:0 auto 80px;
+font-size:0;
+vertical-align:top}
+
+#chunks > li {
+vertical-align:top;
+display:inline-block;
+width:200px;
+padding:0 10px;
+line-height:16px;
+font-size:12px}
+
+#chunks h4 {
+min-height:2rem;
+text-align:left;
+font-weight:normal}
+
+#chunks > li li {
+display:block;
+position:relative;
+padding:0 0 3px 10px}
+
+#chunks > li li:before {
+content:'';
+position:absolute;
+top:0;
+left:0;
+width:16px;
+height:16px;
+border-radius:8px}
+
+#bar {
+position:relative;
+border-top:1px solid #252525}
+
+#bar li {
+position:absolute;
+top:0;
+left:50%;
+width:16px;
+height:16px;
+border-radius:8px;
+opacity:.5;
+-webkit-transform:translate(-50%,-50%);
+transform:translate(-50%,-50%);
+background:#50E3C2}
+
+#bar li:hover {
+border:1px solid #252525;
+background:#fff;
+opacity:1;
+cursor:pointer;
+z-index:1} 
+
+#bar > div {
+min-width:60px}
+
+#bar > div > h4 {
+font-family:"egyptian-light"}
+
+#min {
+position:absolute;
+right:100%;
+margin:8px 20px 0 0;
+-webkit-transform:translate(0,-50%);
+transform:translate(0,-50%)}
+
+#max {
+position:absolute;
+left:100%;
+margin:8px 0 0 20px;
+-webkit-transform:translate(0,-50%);
+transform:translate(0,-50%)}
+
+#avg {
+opacity:0;
+position:absolute;
+width:100px;
+top:40px;
+margin:0;
+left:0;
+-webkit-transform:translate(-50%,0);
+transform:translate(-50%,0);
+transition:.2s}
+
+#avg h6 {
+padding-top:5px}
+
+#avg:before {
+content:'';
+height:40px;
+border-left:1px solid #252525;
+position:absolute;
+left:50%;
+bottom:100%}
+
+#avg:after {
+content:'';
+height:4px;
+width:4px;
+margin-bottom:40px;
+border-radius:2px;
+background:#252525;
+position:absolute;
+left:50%;
+bottom:100%;
+-webkit-transform:translate(-50%,50%);
+transform:translate(-50%,50%)}
+
+#chart h2 {
+margin:60px 0 0 0}
+
+h2 + p {
+margin:10px 0 60px}
+
+#bar h6 {
+margin:0;
+font-size:12px;
+font-weight:200}
+
+#bar b {
+font-size:20px}
+
+#bar h4 {
+margin:0;
+font-size:12px;
+font-weight:200}
+
+.blank-data,
+#blank-data li:before {
+background:transparent url(img/blank-data.svg) no-repeat;
+background-size:contain;
+opacity:1}
+
+.footnote,
+#footnotes li:before {
+background:#FA0E6A!important;
+opacity:.5}
+
+.duplicates,
+#duplicates li:before{
+background:#EEAF00!important;
+opacity:.5}
+
+blockquote {
+width:85%;
+margin:160px auto 40px;
+padding:0;
+font-size:30px}
+
+#chart {
+margin:0 0}
+
+#chart ol {
+text-align:left}
+
+/*
+#chart li {
+position:relative;
+padding:0 0 5px 100px}
+
+#chart h4 {
+margin:0;
+position:absolute;
+top:5px;
+left:0;
+width:100px;
+font-size:12px;
+line-height:1}
+*/
+
+#chart li {
+position:relative;
+padding:0 0 15px}
+
+#chart h4 {
+margin:0 0 3px;
+font-size:12px;
+font-weight:600;
+line-height:1}
+
+#chart .bar {
+position:relative;
+height:22px;
+background:#50E3C2;
+border-radius:0 11px 11px 0;
+text-align:right}
+
+#chart .bar:hover {
+background:#666}
+
+#chart .bar span {
+position:absolute;
+left:5px;
+line-height:22px;
+font-size:12px}
+
+#chart .bar b {
+padding-right:10px;
+color:#fff;
+font-size:14px}
+
+#chart .sm b {
+position:absolute;
+left:100%;
+padding:5px 0 0 5px;
+color:#252525;
+font-size:11px;
+font-family:'egyptian-light'}
+
+.btns {
+margin-top:2rem}
+
+.btns a {
+cursor:pointer;
+display:inline-block;
+height:36px;
+line-height:36px;
+border-radius:18px;
+color:#fff;
+background:#4A90E2;
+padding:0 1rem;
+font-size:16px;
+transition:.2s}
+
+.btns a:hover {
+background:#252525}
+
+#info {
+position:absolute;
+padding:20px 10px;
+font-size:1rem;
+border-radius:4px;
+-ms-transform:translate(-50%,-100%);
+-moz-transform:translate(-50%,-100%);
+-webkit-transform:translate(-50%,-100%);
+transform:translate(-50%,-100%);
+font-size:.875rem;
+text-align:center;
+min-width:200px;
+margin:0;
+border:1px solid #252525;
+font-weight:normal;
+transition:.2s;
+background:#fff;
+display:none;
+z-index:100;
+-webkit-box-shadow:0 0 10px 0 rgba(0,0,0,0.25);
+box-shadow:0 0 10px 0 rgba(0,0,0,0.25)}
+
+#info h3 {
+max-width:180px;
+line-height:1.1;
+font-family:"egyptian-semibold";
+margin:0 auto}
+
+#info p {
+margin:3px 0 6px;
+font-size:12px}
+
+#info .number {
+display:block;
+margin:10px -10px;
+background:#E4E4E4;
+padding:10px 15px;
+font-size:40px}
+
+#info h4 {
+margin:0;
+font-weight:normal;
+font-family:"egyptian-light";
+font-size:14px}
+
+#info h4:last-child {
+}
+
+/*
+#info:after {
+content:'';
+position:absolute;
+top:100%;
+left:-webkit-calc(50% - 5px);
+left:calc(50% - 5px);
+width:0; 
+height:0; 
+border:0;
+border-left:5px solid transparent;
+border-right:5px solid transparent;
+border-top:5px solid #fff;
+font-size:0;
+line-height:0}
+*/
+
+#info:after {
+display:none;
+content:'';
+position:absolute;
+top:100%;
+left:50%;
+width:4px; 
+height:4px;
+margin:30px 0 0 -2px;
+border-radius:2px;
+background:#252525}
+
+#info:before {
+content:'';
+position:absolute;
+top:100%;
+left:50%;
+width:0; 
+height:30px; 
+border-left:1px solid #252525}
+		
+#line-chart {
+position:relative;
+width:700px;
+margin:100px auto}
+
+.lines {
+position:absolute;
+left:0;
+right:0;
+height:200px}
+
+.lines div {
+position:absolute;
+left:0;
+right:0;
+border-top:1px solid #ccc}
+
+.lines span {
+position:absolute;
+right:100%;
+top:0;
+font-size:11px;
+margin:-5px 10px 0 0}
+
+.l33 {
+bottom:33.3%}
+
+.l66 {
+bottom:66.6%}
+
+.l100 {
+bottom:100%}
+
+svg {
+position:relative;
+/*background:#ccc;*/
+margin:0 auto;
+display:block;
+overflow:visible}
+
+#years {
+font-size:0;
+border-top:1px solid #333}
+
+#years li {
+padding-top:5px;
+font-size:12px;
+display:inline-block;
+font-family:"egyptian-semibold";
+width:100px}
+
+circle {
+stroke-width:0;
+fill:#50E3C2}
+
+circle:hover {
+fill:#333}
+
+polyline {
+stroke-width:1.5px;
+stroke:#50E3C2;
+fill:none}
+
+</style>
+	</head>
+	<body>
+	
+		<div id="overview">
+		
+			<h2>This set has <b id="src-count">---</b> items.<br> total is <b id="src-sum">---</b> units.</h2>
+			
+			<ol id="chunks">
+				<li id="blank-data">
+					<h4><b>2</b>  items had blank data (X%):</h4>
+					<ol>
+						<li>AERIS RESOURCES LIMITED</li>
+						<li>AERIS RESOURCES LIMITED</li>
+					</ol>
+				</li>
+				<li id="footnotes">
+					<h4><b>2</b> items have footnotes (X%). Check data:</h4>
+					<ol>
+						<li>AERIS RESOURCES LIMITED</li>
+						<li>AERIS RESOURCES LIMITED</li>
+					</ol>
+				</li>
+				<li id="duplicates">
+					<h4><b>1</b> duplicates found (XX%):</h4>
+					<ol>
+						<li>AERIS RESOURCES LIMITED</li>
+					</ol>
+				</li>
+			</ol>
+
+			
+			
+			<div id="bar">
+			
+				<ol id="dots"></ol>
+				
+				<div id="min">
+					<h6>Min.</h6>
+					<b id="src-min">-</b>
+					<h4><span id="min1">-</span> avg.<br>
+						<span id="min2">-</span> max.</h4>
+				</div>
+				
+				<div id="max">
+					<h6>Max.</h6>
+					<b id="src-max">-</b>
+					<h4><span id="max1">-</span> avg.<br>
+						<span id="max2">-</span> min.</h4>
+				</div>
+				
+				<div id="avg">
+					<h6>Avg.</h6>
+					<b id="src-avg">-</b>
+					<h4><span id="avg1">-</span> avg.<br>
+						<span id="avg2">-</span> min.</h4>
+				</div>
+
+			</div>
+			
+			<blockquote>
+				Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.
+			</blockquote>
+
+			<div id="line-chart">
+				<div class="lines">
+					<div class="l100"><span>4,500kt</span></div>
+					<div class="l66"><span>4,250kt</span></div>
+					<div class="l33"><span>4,000kt</span></div>
+				</div>
+				<svg width="700" height="200">
+					<polyline points="50,16  150,34.6  250,16 350,37.2 450,133 550,150 650,109" />
+					<circle cx="50" cy="16" r="8" data-n="444067735" data-year="2009" />
+					<circle cx="150" cy="34.6" r="8" data-n="437056806" data-year="2010" />
+					<circle cx="250" cy="16" r="8" data-n="444067735" data-year="2011" />
+					<circle cx="350" cy="37.2" r="8" data-n="436068363" data-year="2012" />
+					<circle cx="450" cy="133" r="8" data-n="400713596" data-year="2013" />
+					<circle cx="550" cy="150" r="8" data-n="394292365" data-year="2014" />
+					<circle cx="650" cy="109" r="8" data-n="409941226" data-year="2015" />
+				</svg>
+				<ol id="years">
+					<li>2009</li>
+					<li>2010</li>
+					<li>2011</li>
+					<li>2012</li>
+					<li>2013</li>
+					<li>2014</li>
+					<li>2015</li>
+				</ol>
+			</div>
+			
+			<div id="chart">
+			
+				<h2>The Chart</h2>
+				
+				<p>
+					<select id="filter">
+						<option data-filter="all">Select an option</option>
+						<option data-filter="start" data-filterNum="10">Show top 10</option>
+						<option data-filter="start" data-filterNum="20">Show top 20</option>
+						<option data-filter="start" data-filterNum="30">Show top 30</option>
+						<!--
+						<option data-filter="end" data-filterNum="10">Show bottom 10</option>
+						<option data-filter="end" data-filterNum="20">Show bottom 20</option>
+						<option data-filter="end" data-filterNum="30">Show bottom 30</option>
+						-->
+						<option data-filter="all">Show all</option>
+					</select>
+				</p>
+				
+				<ol id="bars"></ol>
+				
+				<p class="btns">
+					<a>download</a>
+				</p>
+				
+			</div>
+				
+		
+		</div>
+	
+		<div id="info"></div>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="data.js"></script>
+	<script>
+
+/*
+var srcMax = 100;
+var srcMin = 7;
+var srcAvg = 22;
+var srcSum = 1204;
+var srcData = [
+7,100,66,88,12,34,42,99,78
+];
+*/
+
+var srcData = srcData.allresults;
+var cleanData = [];
+
+$(document).ready(function(){
+
+	//!!!!
+	/*
+	var obj = {
+	  "flammable": "inflammable",
+	  "duh": "no duh"
+	};
+	
+	$.each( obj, function( key, value ) {
+	  alert( key + ": " + value );
+	});
+	*/
+	
+	
+	var count = 0;
+	var srcMax = 0;
+	var srcMin = 0;
+	var srcSum = 0;
+	var srcAvg = 0;
+	
+	function compareToMin(n){
+	
+		var tempMin = (srcMin==0)? 1:srcMin;
+
+		//return 
+	
+	}
+	
+	function compareToMax(n){
+	
+		//return 
+	
+	}
+	
+	function compareToAvg(n){
+	
+		//return 
+	
+	}
+	
+	$.each( srcData, function(i,value){
+	
+	  	//console.log(key);
+	  	//console.log(value['total'])
+	  	
+	  	var obj = value;
+	  	var year = obj['datetime']*1;
+	  	
+	  	if (year==2015){
+	  	
+	  		var n = value['value']*1;
+	  	
+			//console.log(i);
+			//console.log(value['name'])
+			//console.log(value['value'])
+		
+			if (!isNaN(n)){
+	  
+				srcMax = Math.max(n, srcMax);
+				srcMin = Math.min(n, srcMin);
+				srcSum += n;
+		
+			}
+			
+			cleanData.push(obj);
+			count++;
+	  	
+	  	}
+	  	
+	});
+	
+	//console.log(obj["Macquarie Generation"])
+	console.log(cleanData[0]);
+	console.log('----');
+	console.log(count);
+	console.log(srcMax)
+	console.log(srcMin)
+	console.log(srcSum)
+	console.log(Math.round(srcSum/count))
+	/* */
+	
+	srcAvg = Math.round(srcSum/count);
+	
+	//srcMin = (srcMin==0)? 1 : srcMin;
+
+	var $body = $('body');
+	var $info = $('#info');
+	var $dots = $('#dots');
+	var $bars = $('#bars');
+	var $max = $('#max');
+	var $min = $('#min');
+	var $avg = $('#avg');
+	var srcLength = count+1;
+	var dotsStr = '';
+	var barsStr = '';
+	
+	$('#src-count').html(count);
+	$('#src-sum').html(srcSum.toLocaleString());
+	$('#src-min').html(srcMin.toLocaleString());
+	$('#src-max').html(srcMax.toLocaleString());
+	$('#src-avg').html(srcAvg.toLocaleString());
+	
+	$('#min1').html( ((srcMin/srcAvg)*100)+'%')
+	$('#min2').html( ((srcMin/srcMax)*100)+'%')
+	
+	$('#max1').html((Math.round((srcMax/srcAvg)*10)/10)+'x')
+	$('#max2').html((Math.round((srcMax/srcMin)*10)/10)+'x')
+	
+	$('#avg1').html((Math.round((srcAvg/srcMin)*10)/10)+'x')
+	$('#avg2').html((Math.round((srcAvg/srcMax)*100))+'%')
+	
+
+	
+	//for (var i=0;i<srcLength;i++){
+	var objCount = 0;
+	$.each( cleanData, function(i,value){
+		
+		var row = cleanData[i];
+		var name = row['name'];
+		var n = row['value']*1;
+		var xPos = (n-srcMin)/(srcMax-srcMin)*100;
+		var w = n/srcMax*100;
+		var classStr = '';
+		//var dotsClassStr = (n==null) ? 'sm' : '';
+		var barClassStr = (w<10) ? 'sm' : '';
+	
+		dotsStr += '<li class="'+classStr+'" data-name="'+name+'" data-index="'+i+'" style="left:'+xPos+'%"></li>';
+		barsStr += '<li class="'+classStr+' '+barClassStr+'">';
+		barsStr += '<h4>'+name+'</h4>';
+		barsStr += '<div class="bar" style="width:'+w+'%" data-name="'+name+'" data-index="'+objCount+'" ><!--<span>'+name+'</span>--><b>'+n.toLocaleString()+'</b></div>';
+		barsStr += '</li>';
+		
+		objCount++
+	
+	});
+	
+	//PSOITION AVG
+	var xPos = (srcAvg-srcMin)/(srcMax-srcMin);
+	$avg.css({'left':(xPos*100)+'%','opacity':1});
+	
+	$dots.html(dotsStr);
+	$bars.html(barsStr);
+	
+	
+	$('circle').mousemove(function(e){
+
+			var $node = $(this);
+			var n = $node.attr('data-n')*1;	
+			var year = $node.attr('data-year');
+			var xPos = e.pageX;
+			var yPos = e.pageY;
+			var str = '';
+			var classStr = '';
+		
+			str = '<h3>'+n.toLocaleString()+'</h3>';
+			str += '<h4>'+year+'</h4>';
+		
+			$info.attr('class','time').html(str).css({
+
+				'left':xPos+'px',
+				'top':(yPos-40)+'px'
+
+			}).show();
+
+	}).mouseleave(function(){
+		$info.hide();
+	});
+	
+	
+	$('[data-index]').mousemove(function(e){
+
+			var $node = $(this);
+			var i = $node.attr('data-index')*1;	
+			var name = $node.attr('data-name');	
+			var n = cleanData[i]['value'];
+			var xPos = e.pageX;
+			var yPos = e.pageY;
+			var w = $body.width();
+			var str = '';
+			var classStr = '';
+		
+			str = '<h3>'+name+'</h3>';
+			str += '<p>#'+(i+1)+' out of '+srcLength+'</p>';
+			str += '<b class="number">'+n.toLocaleString()+'</b>';
+		
+			var minStr = '';
+			var maxStr = '';
+			var avgStr = '';
+			
+			var tempMin = (srcMin==0)? 1 : srcMin;
+		
+			if (n==srcMin){
+				minStr = 'this is';
+			}
+			
+			else {
+				minStr = (Math.round((n/tempMin)*10)/10).toLocaleString()+'x';
+			}
+		
+			str += '<h4>'+minStr+'</b> the min.</h4>';
+		
+			// MAX
+			if (n==srcMax){
+				maxStr = '<b>this is</b>'
+			}
+			else {
+				maxStr = '<b>'+((n/srcMax)*100).toLocaleString()+'%</b> of';
+			}
+		
+			str += '<h4>'+maxStr+' the max.</h4>';
+		
+			var avgStr = '';
+		
+			if (n==srcAvg) {
+				avgStr = '<b>this is</b>'
+			}
+			else if (n<srcAvg){
+				avgStr = '<b>'+((n/srcAvg)*100).toLocaleString()+'%</b> of';
+			}
+			else {
+				avgStr = '<b>'+Math.round((n/srcAvg)*10)/10+'x</b>';
+			}
+		
+			str += '<h4>'+avgStr+' the Avg.</h4>';
+		
+			$info.attr('class',classStr).html(str).css({
+
+				'left':xPos+'px',
+				'top':(yPos-40)+'px'
+
+			}).show();
+
+	}).mouseleave(function(){
+		$info.hide();
+	});
+
+	var $barItem = $('#bars li');
+
+	$('#filter').change(function(){
+		
+		var $node = $(this).find(":selected");
+		var filterVal = $node.attr('data-filter');
+		var filterNum = $node.attr('data-filterNum')*1;
+		
+		//console.log(filterNum)
+		
+		if (filterVal=='all'){
+			$barItem.show();
+		}
+		
+		else {
+		
+			for (var i=0; i<count; i++){
+		
+				var $thisBar = $barItem.eq(i);
+			
+				if (i<filterNum){
+					$thisBar.show();
+				}
+			
+				else {
+					$thisBar.hide();
+				}
+		
+			}
+		
+		}
+		
+		
+		
+
+	});
+	
+	
+
+});
+
+</script>
+
+	</body>
+</html>

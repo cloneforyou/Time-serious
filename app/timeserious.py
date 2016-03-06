@@ -5,12 +5,17 @@ import pandas
 import csv
 import analyse
 
-app = Flask(__name__)
+app = Flask(__name__,static_url_path='')
 
 
 @app.route('/')
 def hello_world():
     return render_template('index.html')
+
+@app.route('/js/<path:path>')
+def send_js(path):
+    return send_from_directory('js', path)
+
 
 @app.route('/addData',methods=['POST'])
 def addData():
@@ -26,7 +31,14 @@ def addData():
             if _units == 'tonnes of CO2 equivalent gas':
                 #blah
                 results = analyse.analyseData(_url,_source,_units,_entity)
-                return render_template('emissions.html', results=results,units=_units,source=_source,entity=_entity)
+                # print allresults
+                return render_template('emissions2.html', results=results,units=_units,source=_source,entity=_entity)
+
+            if _units == 'dollars':
+                #blah
+                results = analyse.analyseData(_url,_source,_units,_entity)
+                # print allresults
+                return render_template('emissions2.html', results=results,units=_units,source=_source,entity=_entity)    
 
     except Exception as e:
         return render_template('error.html',error = str(e))
