@@ -71,23 +71,7 @@ def analyseData(url,source,units,entity):
 			nullSentence = "There was only one " + entity + " that did not report in " + str(mostRecentYear) + ", which was " + str(onlynull['name'].iloc[0])
 		if len(onlynull.index) > 1 :
 			nullSentence = "There were " + str(onlynull.index) + " " + entity + " that did not report in " + mostRecentYear 
-		results['summary']['nullSentence'] = nullSentence
-
-
-	# print results
-
-	# newJson = json.dumps(jsonStr, indent=4)						
-
-	# return results
-
-	# with open('allresults.json','w') as fileOut:
-	# 		fileOut.write(df.sort_values(by='value',ascending=False).to_json(orient='records'))
-	# with open('yearMean.json','w') as fileOut:
-	# 		fileOut.write(yearMean.to_json())
-	# with open('yearSum.json','w') as fileOut:
-	# 		fileOut.write(yearSum.to_json())
-	# with open('summary.json','w') as fileOut:
-	# 		fileOut.write(json.dumps(results["summary"]))							
+		results['summary']['nullSentence'] = nullSentence						
 
 	return (results, allresults)
 
