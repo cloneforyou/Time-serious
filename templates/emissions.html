@@ -31,13 +31,17 @@
             cursor: inherit;
             display: block;
         }
+
+        .blue {
+            color:#005689;
+        }
     </style>
  
 </head>
  
 <body>
  <div id="overview">
-        
+            <h2>The Summary</h2>
             <h2>This set has <b id="src-count">---</b> items.<br> total is <b id="src-sum">---</b> units.</h2>
             
             <ol id="chunks">
@@ -93,11 +97,12 @@
             </div>
             
             <blockquote>
-                <p>{{results.summary.biggestEntity}} has reported the highest {{units}} to {{source}}, making it the highest level in {{results.summary.mostRecentYear}}.</p>
-            <p>Overall, there was a {{results.summary.currYearPctChange}}% increase in total {{units}} year-on-year, bringing the total to {{results.summary.mostRecentYearTotalStr}}.</p>
-            <p>{{results.summary.biggestEntity}} hit the top of the list, followed by {{results.summary.topTen[1]}}, {{results.summary.topTen[2]}}, {{results.summary.topTen[3]}} and {{results.summary.topTen[4]}}.</p>
+                <h2>The Story</h2>
+                <p><span class='blue'>{{results.summary.biggestEntity}}</span> has reported the highest <span class='blue'>{{units}}</span> to <span class='blue'>{{source}}</span>, making it the highest level in <span class='blue'>{{results.summary.mostRecentYear}}</span>.</p>
+            <p>Overall, there was a <span class='blue'>{{results.summary.currYearPctChange}}%</span> increase in total <span class='blue'>{{units}}</span> year-on-year, bringing the total to <span class='blue'>{{results.summary.mostRecentYearTotalStr}}</span>.</p>
+            <p><span class='blue'>{{results.summary.biggestEntity}}</span> hit the top of the list, followed by <span class='blue'>{{results.summary.topTen[1]}}</span>, <span class='blue'>{{results.summary.topTen[2]}}</span>, <span class='blue'>{{results.summary.topTen[3]}}</span> and <span class='blue'>{{results.summary.topTen[4]}}</span>.</p>
             </blockquote>
-
+            <h2>The Charts</h2>
             <div id="line-chart">
                 <div class="lines">
                     <div class="l100"><span>4,500kt</span></div>
@@ -127,7 +132,7 @@
             
             <div id="chart">
             
-                <h2>The Chart</h2>
+                
                 
                 <p>
                     <select id="filter">
