@@ -18,11 +18,24 @@ While similar things have been built before, as far as we know these systems are
 
 For our demo, all you need to do is pop the data into the Google sheet and enter some key variables.
 
-Once you input the variables and the data source, you can tell the program to build the news report.
+Once you input the variables and the data source, you can tell the program to build the news report. Then, you can pick up the news report and publish it on your site with any additions you think necessary.
 
-Some people have joked that we’re making our reporters redundant. We’re really not. What we’re doing is solving a major newsroom problem. We’re keeping editors happy, because they get their story about how hot it is, and faster than the competition. We’re keeping journalists happy, because they get the chance to spend that little bit more time digging into the data they really want to look it and going beyond the surface.
+Some people have joked that we’re making our reporters redundant. We’re really not. What we’re doing is solving a major newsroom problem. We’re keeping editors happy, because they get their story about how hot it is, and also faster than the competition. We’re keeping journalists happy, because they get the chance to spend that little bit more time digging into the data they really want to look at and going beyond the surface.
 
 And we’re in turn providing a better news product for our readers, who get the benefit of the formula driven news stories and the deeper and more meaningful investigations our reporters want to work on.
 
 It also has the added benefit of taking the hassle out of data analysis and graphic production.
+
+In the future, this could be used, and built on, in a number of ways:
+
+*plugged into a scraper, which would produce a story automatically when a dataset is updated (eg. weather forecasts for heatwaves, crime statistics, period data releases like donations)
+*plugged into a scraper, and producing a story whenever a condition is met (eg. crime statistics go up, five days of above average temperatures)
+*broadened to ingest different data formats, like using the Twitter API to automate 'viral' social media stories (identify key original tweets, volume of tweets on topic, etc.) or political campaign speeches (natural language processing, text and sentiment analysis etc.)
+*adding an graphical interface to allow journalists to create new templates
+*use machine learning to score entities and text for importance and public interest based on previous news reports (ie. putting a certain company further up the news story, or putting a certain sentence structure higher up the story rather than lower)
+*use machine learning to automate the creation of new templates based on previous news stories
+
+
+
+
 
