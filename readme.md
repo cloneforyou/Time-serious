@@ -28,12 +28,12 @@ It also has the added benefit of taking the hassle out of data analysis and grap
 
 In the future, this could be used, and built on, in a number of ways:
 
-*plugged into a scraper, which would produce a story automatically when a dataset is updated (eg. weather forecasts for heatwaves, crime statistics, period data releases like donations)
-*plugged into a scraper, and producing a story whenever a condition is met (eg. crime statistics go up, five days of above average temperatures)
-*broadened to ingest different data formats, like using the Twitter API to automate 'viral' social media stories (identify key original tweets, volume of tweets on topic, etc.) or political campaign speeches (natural language processing, text and sentiment analysis etc.)
-*adding an graphical interface to allow journalists to create new templates
-*use machine learning to score entities and text for importance and public interest based on previous news reports (ie. putting a certain company further up the news story, or putting a certain sentence structure higher up the story rather than lower)
-*use machine learning to automate the creation of new templates based on previous news stories
+* plugged into a scraper, which would produce a story automatically when a dataset is updated (eg. weather forecasts for heatwaves, crime statistics, period data releases like donations)
+* plugged into a scraper, and producing a story whenever a condition is met (eg. crime statistics go up, five days of above average temperatures)
+* broadened to ingest different data formats, like using the Twitter API to automate 'viral' social media stories (identify key original tweets, volume of tweets on topic, etc.) or political campaign speeches (natural language processing, text and sentiment analysis etc.)
+* adding an graphical interface to allow journalists to create new templates
+* use machine learning to score entities and text for importance and public interest based on previous news reports (ie. putting a certain company further up the news story, or putting a certain sentence structure higher up the story rather than lower)
+* use machine learning to automate the creation of new templates based on previous news stories
 
 
 
