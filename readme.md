@@ -1,6 +1,6 @@
 #Time Serious
 
-## Time Serious is an [editors lab hackathon project](http://www.walkleys.com/editorslab/) which takes a data input, analyses it, and outputs a news report in natural language, with publication-ready graphics. [Here's the working - but buggy - demo](https://timeserious.herokuapp.com/).
+## Time Serious is an [editors lab hackathon project](http://www.walkleys.com/editorslab/) built in two days which takes a data input, analyses it, and outputs a news report in natural language, with publication-ready graphics. [Here's the working - but buggy - demo](https://timeserious.herokuapp.com/).
 
 ### The problem
 
